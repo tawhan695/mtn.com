@@ -23,6 +23,8 @@
 
 <div class="row">
   <div class="col-lg-7">
+
+    
  <!-- Main content -->
  <section class="content">
   <div class="container-fluid">
@@ -61,7 +63,7 @@
                       <span class="badge badge-danger">สินค้าหมด</span>
 
                     @else
-                    {{number_format($item->qty)}}
+                    {{$item->qty}}
                         
                     @endif  
                   </td>       <!-- ราคาส่ง -->
@@ -101,9 +103,9 @@
         <h3 class="card-title">ตะกร้าสินค้า</h3>
       </div>
       <!-- /.card-header -->
-      <form action="{{route('admin.saler.create')}}" method="post">
+      <form action="{{route('admin.salers.store')}}" method="post">
         @csrf
-        @method('PUT')
+        @method('POST')
 
         <div class="card-body p-0 ">
           <table id="example44" class="table table-striped">
@@ -125,7 +127,7 @@
                 </td>
                 <td>
                   {{-- <span style="font-size: 100%" class="badge bg-primary " id="priceSum">0</span> --}}
-                  <input disabled class="input" type="number" id="priceSum" value="0">    
+                  <input  class="input" type="number" id="priceSum" name="priceSum" value="0">    
                 </td>
                 <td>บาท</td>
               </tr>
@@ -135,7 +137,8 @@
                   ส่วนลด
                 </td>
                 <td>
-                  <input class="input" step="0" min="0" type="number" name="" id="discount2" value="0">    
+                  <input class="input" step="0" min="0" type="number"  id="discount2" name="discount2" value="0">    
+                  
                 </td>
                 <td>บาท</td>
               </tr>
@@ -146,7 +149,7 @@
                 </td>
                 <td>
                   {{-- <span style="font-size: 100%" class="badge bg-primary " id="priceall">0</span>     --}}
-                  <input disabled class="input" type="number" name="priceall" id="priceall" value="0">
+                  <input  class="input" type="number" name="priceall" id="priceall" value="0">
                 </td>
                 <td>บาท</td>
               </tr>
@@ -156,7 +159,12 @@
                   รับเงินสด
                 </td>
                 <td>
-                  <input  class="input"  step="0" min="0" type="number" name="cash" id="cash" value="0">    
+                  <input  class="input"  step="0" min="0" type="number" name="cash" id="cash" value="0">   
+                  <p class="text-danger">
+                    @error('error_change')
+                      กรุณาใส่จำนวนเงินที่ต้องจ่าย
+                    @enderror
+                  </p> 
                 </td>
                 <td>บาท</td>
               </tr>
@@ -167,7 +175,7 @@
                 </td>
                 <td >
                   {{-- <span style="font-size: 100%" class="badge badge-pill badge-success" id="change">0.00</span>    --}}
-                  <input  disabled class="input" type="number" name="change" id="change">
+                  <input  class="input" type="number" name="change" id="change">
                 </td>
                 <td>บาท</td>
               </tr>
@@ -189,7 +197,7 @@
               </tr>
             </tfoot>
           </table>
-  
+          
           <button class="float-right btn btn-info m-3">จบการขาย</button>
         </div>
       </form>
@@ -272,10 +280,11 @@
              ' <td>'+data.name+'</td>'+
               '<td><div class="input-group mb-3"><div class="input-group-prepend">'+
                     '<button id="delQTY'+data.id+'"  onclick="delQTY('+data.id+')"style="border: 0" class="btn btn-outline-secondary" type="button"><span class="fa fa-minus-circle"></span></button>'+
-                 ' </div><input disabled step="0" min="0" en type="number" name="" id="QTY'+data.id+'" value="1" class="form-control text-center" placeholder="" aria-label="" aria-describedby="basic-addon1">'+
+                 ' </div><input  step="0" min="0" en type="number" name="qty[]" id="QTY'+data.id+'" value="1" class="form-control text-center" placeholder="" aria-label="" aria-describedby="basic-addon1">'+
                    '<div class="input-group-prepend"><button id="addQTY'+data.id+'" onclick="addQTY('+data.id+')" style="border: 0" class="btn btn-outline-secondary" type="button"><span class="fa fa-plus-circle"></span></button></div></div>'+
               '</td><td><span class="badge bg-success" id="price'+data.id+'">'+sum+'</span></td></tr>'+
-              '' 
+              '<input type="hidden" name="id[]" value="'+data.id+'">' +
+              '<input type="hidden" name="price_pro[]" value="'+sum+'">' 
                 );
                
               

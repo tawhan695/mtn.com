@@ -35,6 +35,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:Mana
     Route::resource('/TypeProducts','TypeProductsController');
     //ขาย
     Route::resource('/saler','SalerController');
+    Route::resource('/salers','SalerMController');
+    //การเงิน
+    Route::resource('/finance','FinanceController');
 
 
 });
@@ -51,6 +54,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:Bran
       //ขาย
     Route::resource('/saler','SalerController');
     Route::resource('/salers','SalerMController');
+
+    //การเงิน
+    Route::resource('/finance','FinanceController');
 });
 Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:Salesperson')->group(function () {   // พนักงานขาย
     //พนักงาน
@@ -65,6 +71,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:Sale
     //ขาย
     Route::resource('/saler','SalerController');
     Route::resource('/salers','SalerMController');
+
+    //การเงิน
+    Route::resource('/finance','FinanceController');
 });
 Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:DeliveryStaff')->group(function () {   // พนักงานขับรถ
     // Route::resource('/employee','EmployeeController');

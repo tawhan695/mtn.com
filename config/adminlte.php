@@ -342,11 +342,16 @@ return [
                 ],
                 [
                     'text' => 'ประวัติการขาย',
-                    'route'  => 'admin.TypeProducts.index',
+                    'route'  => 'admin.salers.index',
                     'icon' => 'nav-icon far fa-circle text-warning'
                 ],
 
             ],
+        ],
+        [
+            'text' => 'การเงิน',
+            'icon' => 'nav-icon fas fa-coins',
+            'route'  => 'admin.finance.index'
         ],
         ['header' => 'จัดการข้อมุลส่วนตัว'],
         [
