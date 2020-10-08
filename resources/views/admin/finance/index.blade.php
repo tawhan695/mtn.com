@@ -22,7 +22,10 @@
               {{number_format($finance,2)}}
               
               <small>บาท</small>
-              <button class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModalCenter">เพิ่มเงินสด</button>
+              @can('BranchManagerAssistant')
+                
+                <button class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModalCenter">เพิ่มเงินสด</button>
+              @endcan
               <!-- Modal -->
               <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
