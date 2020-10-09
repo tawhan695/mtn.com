@@ -24,12 +24,10 @@ class ChangeProductsController extends Controller
     public function index()
     {
         
-        if(!session()->has('branch')){
-            session()->put('branch',Auth::user()->user_branch_id());
-        }
         
-        $products = products::where('branch_id',session()->get('branch'))->get();
-        $products_import = ImportProducts::where('form',Branch::find(session()->get('branch'))->name)
+        
+        $products = products::where('branch_id',Auth::user()->user_branch_id())->get();
+        $products_import = ImportProducts::where('form',Branch::find(Auth::user()->user_branch_id())->name)
         ->orderBy('id', 'DESC')->get();
         return view('admin.products.changeproducts.index')
         ->with(['products'=>$products_import,'Branch'=>Branch::all(),'type'=>$products]);
@@ -67,7 +65,7 @@ class ChangeProductsController extends Controller
         $ImportProducts->branch_id=$request->branch;
         $ImportProducts->sent_date=1;
         // $ImportProducts->form=$request->branch;
-        $ImportProducts->form=Branch::find(session()->get('branch'))->name;
+        $ImportProducts->form=Branch::find(Auth::user()->user_branch_id())->name;
         $ImportProducts->status=false;
         $ImportProducts->sent_date= Carbon::now();
         $ImportProducts->save();

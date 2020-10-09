@@ -37,7 +37,7 @@ class HomeController extends Controller
              return redirect(route('admin.dashborad.index'));
         }
         else if (Gate::denies('all') == false){
-             return redirect(route('admin.StockProducts.index'));
+            return redirect(route('admin.finance.index'));
         }
         
         

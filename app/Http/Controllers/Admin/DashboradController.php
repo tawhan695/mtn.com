@@ -21,9 +21,7 @@ class DashboradController extends Controller
      */
     public function index()
     {
-        if(!session()->has('branch')){
-            session()->put('branch',Auth::user()->user_branch_id());
-        }
+       
         $products = products::all();
         return view('admin.dashdorad.index')
         ->with(['products'=>$products]);

@@ -41,10 +41,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:Mana
 
 
 });
-Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:BranchManagerAssistant')->group(function () {   //ผู้ช่วยผุ้จัดการ
+Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:all')->group(function () {   //ผู้ช่วยผุ้จัดการ
     //พนักงาน
     Route::resource('/employee','EmployeeController');
-    // สินค้า
+    // // สินค้า
     Route::resource('/ImportProducts','ImportProductsController');
     Route::resource('/ReturnProducts','ReturnProductsController');
     Route::resource('/ChangeProducts','ChangeProductsController');
@@ -58,26 +58,26 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:Bran
     //การเงิน
     Route::resource('/finance','FinanceController');
 });
-Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:Salesperson')->group(function () {   // พนักงานขาย
-    //พนักงาน
-    Route::resource('/employee','EmployeeController');
-    // สินค้า
-    Route::resource('/ImportProducts','ImportProductsController');
-    Route::resource('/ReturnProducts','ReturnProductsController');
-    Route::resource('/ChangeProducts','ChangeProductsController');
-    Route::resource('/DefectiveProducts','DefectiveProductsController');
-    Route::resource('/StockProducts','StockProductsController');
-    Route::resource('/TypeProducts','TypeProductsController');
-    //ขาย
-    Route::resource('/saler','SalerController');
-    Route::resource('/salers','SalerMController');
+// Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:Salesperson,BranchManagerAssistant')->group(function () {   // พนักงานขาย
+//     //พนักงาน
+//     // Route::resource('/employee','EmployeeController');
+//     // สินค้า
+//     // Route::resource('/ImportProducts','ImportProductsController');
+//     // Route::resource('/ReturnProducts','ReturnProductsController');
+//     // Route::resource('/ChangeProducts','ChangeProductsController');
+//     // Route::resource('/DefectiveProducts','DefectiveProductsController');
+//     // Route::resource('/StockProducts','StockProductsController');
+//     // Route::resource('/TypeProducts','TypeProductsController');
+//     //ขาย
+//     Route::resource('/saler','SalerController');
+//     Route::resource('/salers','SalerMController');
 
-    //การเงิน
-    Route::resource('/finance','FinanceController');
-});
-Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:DeliveryStaff')->group(function () {   // พนักงานขับรถ
-    // Route::resource('/employee','EmployeeController');
-});
-Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:GeneralStaff')->group(function () {   // พนักงานทั่่วไป
-    // Route::resource('/employee','EmployeeController');
-});
+//     //การเงิน
+//     Route::resource('/finance','FinanceController');
+// });
+// Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:DeliveryStaff')->group(function () {   // พนักงานขับรถ
+//     // Route::resource('/employee','EmployeeController');
+// });
+// Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:GeneralStaff')->group(function () {   // พนักงานทั่่วไป
+//     // Route::resource('/employee','EmployeeController');
+// });

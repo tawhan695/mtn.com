@@ -19,6 +19,7 @@ class EmployeeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+      
     }
     /**
      * Display a listing of the resource.
@@ -178,7 +179,7 @@ class EmployeeController extends Controller
         // try {
             $tableUser = User::find($id);
             $tableUser->name = $request->name;
-            $tableUser->email = $request->email.'@mtn.com';
+            $tableUser->email = $request->email;
             $tableUser->password = Hash::make($request->password);
             $tableUser->name = $request->name;
            

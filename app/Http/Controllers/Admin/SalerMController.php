@@ -24,10 +24,8 @@ class SalerMController extends Controller
      */
     public function index()
     {
-        if(!session()->has('branch')){
-            session()->put('branch',Auth::user()->user_branch_id());
-        }
-        $oder = Saler::where('branch_id',session()->get('branch'))->get();
+     
+        $oder = Saler::where('branch_id',Auth::user()->user_branch_id())->get();
 
         return view('admin.sales.his')->with(['oder'=>$oder]);
     
@@ -82,7 +80,7 @@ class SalerMController extends Controller
         $Saler = new Saler;
         // $Saler->order_lists_id = $request-> ;
         $Saler->user_id =Auth::user()->id ;
-        $Saler->branch_id = session()->get('branch') ;
+        $Saler->branch_id = Auth::user()->user_branch_id();
         // $Saler->qty = $request-> ;
         $Saler->total = $request->priceSum ;
         $Saler->discount = $request->discount2 ;
@@ -105,13 +103,14 @@ class SalerMController extends Controller
                         'qty'=>$request->qty[$i],
                         'price'=>$request->price_pro[$i],
                         'salers_id'=>$Saler->id,
+                        'branch_id'=>session()->get('branch'),
                         "created_at" =>  \Carbon\Carbon::now(), # new \Datetime()
                         // "updated_at" => \Carbon\Carbon::now(),  # new \Datetime()
                     ];
                 } 
                 $order_list  = order_list::insert($answers);
                 // $oder = Saler::where('branch_id',session()->get('branch'))->get();
-                $finance =  finance::where('branch_id',session()->get('branch'))->first();
+                $finance =  finance::where('branch_id',Auth::user()->user_branch_id())->first();
                 $finance->wallet = $finance->wallet - $request->change; 
                 $finance->update();
                 return redirect(route('admin.salers.index'));

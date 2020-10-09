@@ -45,7 +45,7 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('BranchManagerAssistant', function ($user) {
             return $user->hasAnyRoles([
-                'Manager',
+                // 'Manager',
                 'BranchManagerAssistant',
                 // 'Salesperson',
                 // 'DeliveryStaff',
@@ -54,7 +54,7 @@ class AuthServiceProvider extends ServiceProvider
             });
         Gate::define('Salesperson', function ($user) {
             return $user->hasAnyRoles([
-            'Manager',
+            // 'Manager',
             // 'BranchManagerAssistant',
             'Salesperson',
             // 'DeliveryStaff',
@@ -63,7 +63,7 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('DeliveryStaff', function ($user) {
             return $user->hasAnyRoles([
-            'Manager',
+            // 'Manager',
             // 'BranchManagerAssistant',
             // 'Salesperson',
             'DeliveryStaff',
@@ -72,7 +72,7 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('GeneralStaff', function ($user) {
             return $user->hasAnyRoles([
-            'Manager',
+            // 'Manager',
             // 'BranchManagerAssistant',
             // 'Salesperson',
             // 'DeliveryStaff',
@@ -90,6 +90,13 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('Manager-menu', function ($user) {
             return $user->hasRole('Manager');
+        });
+        Gate::define('Manager-product', function ($user) {
+            return $user->hasRole(
+                // ['Manager',
+            'BranchManagerAssistant'
+            // ,]
+        );
         });
         Gate::define('edit-employee', function ($user) {
             return $user->hasAnyRoles([

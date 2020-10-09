@@ -19,6 +19,7 @@ class CreateOrderListsTable extends Migration
             $table->integer('qty')->nullable();
             $table->integer('price')->nullable();
             $table->integer('salers_id')->unsigned();
+            $table->integer('branch_id')->unsigned();
             $table->timestamps();
         });
     }

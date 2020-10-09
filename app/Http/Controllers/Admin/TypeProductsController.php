@@ -33,7 +33,7 @@ class TypeProductsController extends Controller
             session()->put('branch',Auth::user()->user_branch_id());
         }
         
-        $products = products::where('branch_id',session()->get('branch'))->get();
+        $products = products::where('branch_id',Auth::user()->user_branch_id())->get();
         return view('admin.products.typeProduct.index')->with(['products'=>$products]);
     }
 

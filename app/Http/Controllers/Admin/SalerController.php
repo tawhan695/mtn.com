@@ -22,10 +22,8 @@ class SalerController extends Controller
      */
     public function index()
     {
-        if(!session()->has('branch')){
-            session()->put('branch',Auth::user()->user_branch_id());
-        }
-        $products = products::where('branch_id',session()->get('branch'))->get();
+      
+        $products = products::where('branch_id',Auth::user()->user_branch_id())->get();
 
         return view('admin.sales.menu')->with(['products'=>$products]);
     
@@ -66,10 +64,8 @@ class SalerController extends Controller
      */
     public function show( $type)
     {
-    if(!session()->has('branch')){
-        session()->put('branch',Auth::user()->user_branch_id());
-    }
-    $products = products::where('branch_id',session()->get('branch'))->get();
+  
+    $products = products::where('branch_id',Auth::user()->user_branch_id())->get();
     return view('admin.sales.index')->with(['products'=>$products,'type'=>$type]);
     }
 

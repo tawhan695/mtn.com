@@ -24,7 +24,7 @@ class StockProductsController extends Controller
         if(!session()->has('branch')){
             session()->put('branch',Auth::user()->user_branch_id());
         }
-        $products = products::where('branch_id',session()->get('branch'))->get();
+        $products = products::where('branch_id',Auth::user()->user_branch_id())->get();
         return view('admin.products.stock.index')->with(['products'=>$products]);
     }
 

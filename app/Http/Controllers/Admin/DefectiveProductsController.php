@@ -21,11 +21,9 @@ class DefectiveProductsController extends Controller
      */
     public function index()
     {
-        if(!session()->has('branch')){
-            session()->put('branch',Auth::user()->user_branch_id());
-        }
-        $products = products::where('branch_id',session()->get('branch'))->get();
-        $DefectiveProducts = DefectiveProducts::where('branch_id',session()->get('branch'))->orderBy('id', 'DESC')->get();
+        
+        $products = products::where('branch_id',Auth::user()->user_branch_id())->get();
+        $DefectiveProducts = DefectiveProducts::where('branch_id',Auth::user()->user_branch_id())->orderBy('id', 'DESC')->get();
         return view('admin.products.defectiveproducts.index')
                 ->with([
                     'products'=>$products,

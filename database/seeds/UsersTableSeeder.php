@@ -23,6 +23,7 @@ class UsersTableSeeder extends Seeder
         $SalespersonRole =Role::where('name','Salesperson')->first();
         $DeliveryStaffRole =Role::where('name','DeliveryStaff')->first();
         $GeneralStaffRole =Role::where('name','GeneralStaff')->first();
+        $adminRole =Role::where('name','Manager')->first();
         // print_r($ManagerRole);
         $Manager=User::create([
             'name'=>'ผู้จัดการ',
@@ -49,11 +50,17 @@ class UsersTableSeeder extends Seeder
             'email'=>'GeneralStaff@mtn.com',
             'password'=> Hash::make('123456789')
         ]);
+        $admin=User::create([
+            'name'=>'ตาหวาน',
+            'email'=>'tawhan@mtn.com',
+            'password'=> Hash::make('123456789')
+        ]);
         $Manager->roles()->attach($ManagerRole);
         $BranchManagerAssistant->roles()->attach($BranchManagerAssistantRole);
         $Salesperson->roles()->attach($SalespersonRole);
         $DeliveryStaff->roles()->attach($DeliveryStaffRole);
         $GeneralStaff->roles()->attach($GeneralStaffRole);
+        $admin->roles()->attach($adminRole);
 
 
         // กำหนดสาขาให้ผู้ใช้
@@ -64,5 +71,6 @@ class UsersTableSeeder extends Seeder
         $Salesperson->branch()->attach($Branch_1);
         $DeliveryStaff->branch()->attach($Branch_1);
         $GeneralStaff->branch()->attach($Branch_1);
+        $admin->branch()->attach($Branch_1);
     }
 }

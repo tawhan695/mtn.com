@@ -295,6 +295,7 @@ return [
         ['header' => 'จัดการสาขา'],
         [
             'text' => 'สินค้า',
+            'can'  => 'Manager-product',
             'url'  => '',
             'icon' => 'nav-icon fas fa-boxes',
             'submenu' => [

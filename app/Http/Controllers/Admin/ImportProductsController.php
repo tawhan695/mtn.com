@@ -24,15 +24,15 @@ class ImportProductsController extends Controller
      */
     public function index()
     {
-        if(!session()->has('branch')){
-            session()->put('branch',Auth::user()->user_branch_id());
-        }
-        $products_import = ImportProducts::where('status',true)->orderBy('id', 'DESC')->get();
+      
+        $products_import = ImportProducts::where('status',true) 
+            ->where('branch_id',Auth::user()->user_branch_id())
+            ->orderBy('id', 'DESC')->get();
         $products_im = ImportProducts::where('status',false)
-
+            ->where('branch_id',Auth::user()->user_branch_id())
             ->orderBy('id', 'DESC')->get();
         // var_dump($products_import);
-        $products = products::where('branch_id',session()->get('branch'))->get();
+        $products = products::where('branch_id',Auth::user()->user_branch_id())->get();
         return view('admin.products.importproducts.index')
         ->with(['products'=>$products,'import'=>$products_import,'products_im'=>$products_im]);
 
@@ -71,7 +71,7 @@ class ImportProductsController extends Controller
         $ImportProducts->qty=$request->qty;
         $ImportProducts->branch_id=$products->branch_id;
         $ImportProducts->sent_date=1;
-        $ImportProducts->form=Branch::find(session()->get('branch'))->name;
+        $ImportProducts->form=Branch::find(Auth::user()->user_branch_id())->name;
         $ImportProducts->status=true;
         $ImportProducts->sent_date= Carbon::now();
         $ImportProducts->save();
@@ -128,7 +128,7 @@ class ImportProductsController extends Controller
 
             // เพิ่มใส่คลังสินค้าสาขา
             // $products = products::find($ImportProducts->products_id);
-            $products = products::where('branch_id',session()->get('branch'))
+            $products = products::where('branch_id',Auth::user()->user_branch_id())
             ->where('name',$ImportProducts->name)
             ->first();
             // $products = products::where('name',$ImportProducts->name)->first();
@@ -143,7 +143,7 @@ class ImportProductsController extends Controller
                 $tableTypeProduct->retail = $ImportProducts->retail;
                 $tableTypeProduct->wholesale = $ImportProducts->wholesale;
                 $tableTypeProduct->qty = $ImportProducts->qty;
-                $tableTypeProduct->branch_id = session()->get('branch');
+                $tableTypeProduct->branch_id = Auth::user()->user_branch_id();
                 $tableTypeProduct->des = $ImportProducts->des;
                 $tableTypeProduct->save();
                 return redirect(route('admin.ImportProducts.index'));
