@@ -52,19 +52,24 @@ class DefectiveProductsController extends Controller
     {
         // var_dump($request->all());
         $products = products::find($request->product_id);
-        $products->qty = $products->qty - $request->qty;
-        $products->update();
-        // var_dump($products->id);
-        $DefectiveProducts = new DefectiveProducts;
-        $DefectiveProducts->products_id=$products->id;
-        $DefectiveProducts->image=$products->image;
-        $DefectiveProducts->name=$products->name;
-        $DefectiveProducts->retail=$products->retail;
-        $DefectiveProducts->wholesale=$products->wholesale;
-        $DefectiveProducts->qty=$request->qty;
-        $DefectiveProducts->branch_id=$products->branch_id;
-        $DefectiveProducts->save();
-        return redirect(route('admin.DefectiveProducts.index'));
+        if($products->qty > 0 ){
+            $products->qty = $products->qty - $request->qty;
+            $products->update();
+            // var_dump($products->id);
+            $DefectiveProducts = new DefectiveProducts;
+            $DefectiveProducts->products_id=$products->id;
+            $DefectiveProducts->image=$products->image;
+            $DefectiveProducts->name=$products->name;
+            $DefectiveProducts->retail=$products->retail;
+            $DefectiveProducts->wholesale=$products->wholesale;
+            $DefectiveProducts->qty=$request->qty;
+            $DefectiveProducts->branch_id=$products->branch_id;
+            $DefectiveProducts->save();
+            return redirect(route('admin.DefectiveProducts.index'));
+        }else{
+            redirect()->route('admin.DefectiveProducts.index')->withErrors(['productnull'=>'สินค้าไม่มี']);
+
+        }
     }
 
     /**

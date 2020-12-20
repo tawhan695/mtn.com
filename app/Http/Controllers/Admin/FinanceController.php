@@ -91,12 +91,12 @@ class FinanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // var_dump($request->all());
+        var_dump($request->all());
         $finance = finance::find($id);
         if(!$finance){
             $F = new finance;
             $F->wallet = $request->price_update;
-            $F->branch_id = $request->Auth::user()->user_branch_id();
+            $F->branch_id = Auth::user()->user_branch_id();
             $F->save();
         }else{
             $finance->wallet = $finance->wallet + $request->price_update;

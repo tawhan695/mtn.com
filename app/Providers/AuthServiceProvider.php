@@ -93,9 +93,9 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('Manager-product', function ($user) {
             return $user->hasRole(
-                // ['Manager',
+                ['Manager',
             'BranchManagerAssistant'
-            // ,]
+            ,]
         );
         });
         Gate::define('edit-employee', function ($user) {

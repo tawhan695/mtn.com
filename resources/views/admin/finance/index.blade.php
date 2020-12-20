@@ -7,7 +7,11 @@
 @stop
 
 @section('content')
- 
+@error('nullwallet')
+<script>
+  alert('เงินทอนไม่พอ');
+</script>
+@enderror
 <section class="content">
   <div class="container-fluid">
     <!-- Info boxes -->
@@ -22,7 +26,7 @@
               {{number_format($finance,2)}}
               
               <small>บาท</small>
-              @can('BranchManagerAssistant')
+              @can('Manager-product')
                 
                 <button class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModalCenter">เพิ่มเงินสด</button>
               @endcan

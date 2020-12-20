@@ -82,7 +82,7 @@ class TypeProductsController extends Controller
         $tableTypeProduct->name = $request->name;
         $tableTypeProduct->retail = $request->retail;
         $tableTypeProduct->wholesale = $request->wholesale;
-        $tableTypeProduct->branch_id = session()->has('branch');
+        $tableTypeProduct->branch_id = Auth::user()->user_branch_id();
         
         if($request->des){
             $tableTypeProduct->des = $request->des;

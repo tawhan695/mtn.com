@@ -88,9 +88,20 @@ class SalerMController extends Controller
         $Saler->change = $request->change ;
         $Saler->cash = $request->cash;
         $Saler->save();
-        echo $Saler->id;
+        // echo $Saler->id;
         if ($Saler->id){
-            $answers = [];
+         
+                // $oder = Saler::where('branch_id',session()->get('branch'))->get();
+                if($request->change !=0){
+                    $finance =  finance::where('branch_id',Auth::user()->user_branch_id())->first();
+                    if(!$finance){
+                        return redirect()->route('admin.finance.index')->withErrors(['nullwallet'=>'เงินทอนไม่พอ']);
+                    }else{
+                        $finance->wallet = $finance->wallet - $request->change; 
+                        $finance->update();
+                    }
+                }
+                $answers = [];
                 for ($i=0; $i < count($request->id); $i++) { 
                     # code...
                     // echo $request->id[$i];
@@ -109,10 +120,7 @@ class SalerMController extends Controller
                     ];
                 } 
                 $order_list  = order_list::insert($answers);
-                // $oder = Saler::where('branch_id',session()->get('branch'))->get();
-                $finance =  finance::where('branch_id',Auth::user()->user_branch_id())->first();
-                $finance->wallet = $finance->wallet - $request->change; 
-                $finance->update();
+
                 return redirect(route('admin.salers.index'));
         }
 

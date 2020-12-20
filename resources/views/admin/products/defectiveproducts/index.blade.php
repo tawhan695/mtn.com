@@ -8,6 +8,11 @@
 
 @section('content')
 <section class="content">
+  @error('productnull')
+    <script>
+      alert('สินค้าไม่มี');
+    </script>
+  @enderror
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">

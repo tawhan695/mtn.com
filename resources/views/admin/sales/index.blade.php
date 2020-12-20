@@ -5,7 +5,7 @@
  
 @endsection
 @section('content_header')
-    <h1>การขาย 
+    <h3>การขาย 
       @php
       $s = '';
           if($type == 1){
@@ -16,192 +16,106 @@
             echo $s;
           }
       @endphp
-    </h1>
+    </h3>
 @stop
 
 @section('content')
 
 <div class="row">
-  <div class="col-lg-7">
-
-    
- <!-- Main content -->
- <section class="content">
-  <div class="container-fluid">
+  <div class="col-lg-12 p-3">
     <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">รายการประเภทสินค้า</h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>ลำดับ</th>
-                <th>ชื่อ</th>
-                <th>ราคา{{$s}}</th>
-                <th>จำนวนในคลัง</th>
-        
-                <th>จัดการ</th>
-              </tr>
-              </thead>
-              <tbody>
-
-                @foreach ($products as $item)
-                <tr>
-                  <td>{{$loop->iteration}}</td> <!-- ลำดับ-->
-                  <td>{{$item->name}}</td> <!-- ชื่อ -->
-                  <td >@if ($type == 1)
-                    {{number_format($item->retail,2)}}
-                  @else
-                    {{number_format($item->wholesale,2)}}
-                  @endif บาท</td>
-                  <td id="qtyp{{$item->id}}">
-                    @if ($item->qty == 0)
-                      <span class="badge badge-danger">สินค้าหมด</span>
-
-                    @else
-                    {{$item->qty}}
-                        
-                    @endif  
-                  </td>       <!-- ราคาส่ง -->
-                  
-                  <td>
-                    <div class="row">
-                      {{-- <div class="col-12 col-sm-4"> --}}
-                        @if ($item->qty != 0)
-                        <button id="addp" type="button" class="btn btn-warning m-1" onclick="addProduct({{$item->id}},{{$type}});" ><span  class="fas fa-cart-plus"  ></span> เพิ่มใส่ตะกร้า</button>
-                        @else
-                        <button disabled type="button" class="btn btn-warning m-1" onclick="addProduct({{$item->id}},{{$type}});" ><span  class="fas fa-cart-plus"  ></span> เพิ่มใส่ตะกร้า</button>
-
-                        @endif 
-                    </div>
-                  </td>       <!-- จัดการ -->
-                </tr>
-               @endforeach
-
-              </tbody>
-  
-            </table>
-          </div>
-          <!-- /.card-body -->
+      <div class="col-12 col-lg-6 ">
+        <div class="btn-group btn-group-lg btn-block">
+          <button type="button" class="btn btn-outline-warning  btn-lg">
+            2500 
+            <span class="badge badge-light text-warning">฿</span>
+          </button>
+          <button type="button" class="btn btn-warning" style="width: 10%">
+            <i class="fas fa-shopping-cart" style="color: white"></i>
+            <span class="badge badge-pill badge-warning text-white">X1</span>
+          </button>
+        </div>
         </div>
       </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container-fluid -->
-</section>
-<!-- /.content -->
-  </div>
-  <div class="col-lg-5 ">
-    <div class="card ">
-      <div class="card-header bg-info ">
-        <h3 class="card-title">ตะกร้าสินค้า</h3>
-      </div>
-      <!-- /.card-header -->
-      <form action="{{route('admin.salers.store')}}" method="post">
-        @csrf
-        @method('POST')
-
-        <div class="card-body p-0 ">
-          <table id="example44" class="table table-striped">
-            <thead>
-              <tr>
-                <th style="width: 10px">รหัสสินค้า</th>
-                <th>ชื่อสินค้า</th>
-                <th>จำนวน</th>
-                <th style="width: 40px">ราคา</th>
-              </tr>
-            </thead>
-            <tbody id="stock">
-            </tbody>
-            <tfoot>
-              <tr>
-                <td></td>
-                <td>
-                  รวม
-                </td>
-                <td>
-                  {{-- <span style="font-size: 100%" class="badge bg-primary " id="priceSum">0</span> --}}
-                  <input  class="input" type="number" id="priceSum" name="priceSum" value="0">    
-                </td>
-                <td>บาท</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  ส่วนลด
-                </td>
-                <td>
-                  <input class="input" step="0" min="0" type="number"  id="discount2" name="discount2" value="0">    
-                  
-                </td>
-                <td>บาท</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  รวมทั้งหมด
-                </td>
-                <td>
-                  {{-- <span style="font-size: 100%" class="badge bg-primary " id="priceall">0</span>     --}}
-                  <input  class="input" type="number" name="priceall" id="priceall" value="0">
-                </td>
-                <td>บาท</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  รับเงินสด
-                </td>
-                <td>
-                  <input  class="input"  step="0" min="0" type="number" name="cash" id="cash" value="0">   
-                  <p class="text-danger">
-                    @error('error_change')
-                      กรุณาใส่จำนวนเงินที่ต้องจ่าย
-                    @enderror
-                  </p> 
-                </td>
-                <td>บาท</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  เงินทอน
-                </td>
-                <td >
-                  {{-- <span style="font-size: 100%" class="badge badge-pill badge-success" id="change">0.00</span>    --}}
-                  <input  class="input" type="number" name="change" id="change">
-                </td>
-                <td>บาท</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  เวลาทำการ
-                </td>
-                <td >
-                  <span class="badge badge-pill badge-success">{{now()}}</span> 
-                </td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td ></td>
-                <td></td>
-              </tr>
-            </tfoot>
-          </table>
+      <div class="row">
+        <div class="col-12 col-lg-6">
           
-          <button class="float-right btn btn-info m-3">จบการขาย</button>
-        </div>
-      </form>
-      <!-- /.card-body -->
+            <div class="mt-3 mb-3">
+              <input class="form-control form-control-sm " type="text" placeholder="ค้นหา"
+              aria-label="Search">
+            </div>
+            
+          
+          </div>
+      </div>
+   
+      
+    </div>
+  </div>
+  <div class="col-lg-12 p-3">
+        <div class="row">
+          {{-- < --}}
+          <div class="col-6 col-lg-4">
+            <div class="card" style="width:100%">
+              <img class="card-img-top" src="{{asset('storage/images/unnamed.jpg')}}" alt="Card image" style="width:100%">
+              <div class=" text-center">
+                <h5 class="">ไข่ no.1</h5>
+                <p class="">100 ฿</p>
+                {{-- <a href="#" class="btn btn-primary">See Profile</a> --}}
+              </div>
+             </div>
+          </div>
+          <div class="col-6 col-lg-4">
+            <div class="card" style="width:100%">
+              <img class="card-img-top" src="{{asset('storage/images/unnamed.jpg')}}" alt="Card image" style="width:100%">
+              <div class=" text-center">
+                <h5 class="">ไข่ no.1</h5>
+                <p class="">100 ฿</p>
+                {{-- <a href="#" class="btn btn-primary">See Profile</a> --}}
+              </div>
+             </div>
+          </div>
+          <div class="col-6 col-lg-4">
+            <div class="card" style="width:100%">
+              <img class="card-img-top" src="{{asset('storage/images/unnamed.jpg')}}" alt="Card image" style="width:100%">
+              <div class=" text-center">
+                <h5 class="">ไข่ no.1</h5>
+                <p class="">100 ฿</p>
+                {{-- <a href="#" class="btn btn-primary">See Profile</a> --}}
+              </div>
+             </div>
+          </div>
+          <div class="col-6 col-lg-4">
+            <div class="card" style="width:100%">
+              <img class="card-img-top" src="{{asset('storage/images/unnamed.jpg')}}" alt="Card image" style="width:100%">
+              <div class=" text-center">
+                <h5 class="">ไข่ no.1</h5>
+                <p class="">100 ฿</p>
+                {{-- <a href="#" class="btn btn-primary">See Profile</a> --}}
+              </div>
+             </div>
+          </div>
+          <div class="col-6 col-lg-4">
+            <div class="card" style="width:100%">
+              <img class="card-img-top" src="{{asset('storage/images/unnamed.jpg')}}" alt="Card image" style="width:100%">
+              <div class=" text-center">
+                <h5 class="">ไข่ no.1</h5>
+                <p class="">100 ฿</p>
+                {{-- <a href="#" class="btn btn-primary">See Profile</a> --}}
+              </div>
+             </div>
+          </div>
+          <div class="col-6 col-lg-4">
+            <div class="card" style="width:100%">
+              <img class="card-img-top" src="{{asset('storage/images/unnamed.jpg')}}" alt="Card image" style="width:100%">
+              <div class=" text-center">
+                <h5 class="">ไข่ no.1</h5>
+                <p class="">100 ฿</p>
+                {{-- <a href="#" class="btn btn-primary">See Profile</a> --}}
+              </div>
+             </div>
+          </div>
+          
     </div>
   </div>
 </div>
@@ -375,12 +289,14 @@
   <link rel="stylesheet" href="{{ asset('vendor/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  
   {{-- <link rel="stylesheet" href="{{ asset('vendor/datatables-bs4/css/dataTables.bootstrap4.min.css') }}"> --}}
   
 @stop
 
 @section('js')  
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
     <script>
       $(function () {
         
